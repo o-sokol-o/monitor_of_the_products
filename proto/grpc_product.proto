@@ -1,0 +1,61 @@
+// protoc --go_out=. --go-grpc_out=. proto/grpc_product.proto
+// protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto/grpc_product.proto
+// bad: protoc --go_out=plugins=grpc:proto proto/grpc_log.proto
+
+syntax = "proto3";
+
+package grpc_product;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "gen/grpc_product";
+
+
+
+
+message RequestFetch {
+  string url = 1;
+}
+
+message ResponseFetch {
+  int32 new_product_count = 1;
+  int32 update_product_count = 2;
+}
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+message Paging {
+	int32 NumPage        = 1;
+	int32 ProductPerPage = 2;
+}
+message Sorting {
+	int32 SortField = 1;
+	int32 Direction = 2;
+}
+
+message RequestList {
+	Paging  Paging  = 1;
+	Sorting Sorting = 2;
+}
+
+message Product {
+  string      Name  = 1;      
+  int32       Cost  = 2;      
+  int32       ChangeCount = 3;
+  google.protobuf.Timestamp UpdateAt = 4;
+}
+
+message ResponseList {
+  repeated Product Products = 1;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+service GrpcProductsService {
+  rpc Fetch(RequestFetch) returns (ResponseFetch) {}
+  rpc List(RequestList) returns (ResponseList) {}
+}

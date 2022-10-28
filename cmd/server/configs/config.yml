@@ -1,0 +1,8 @@
+DB:
+    uri: "mongodb://localhost:27017"
+    login: "admin" 
+    password: "admin"
+    database: "monitor_of_the_products"
+
+server:
+    Port: 9000

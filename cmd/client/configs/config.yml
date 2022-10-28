@@ -1,0 +1,5 @@
+Server:
+    uri: "localhost:9000"
+
+Product:
+    uri: "http://164.92.251.245:8080/api/v1/products/" 
